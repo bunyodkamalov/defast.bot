@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./FileUpload.Api/Dockerfile
+          file: ./Defast.Bot.Api/Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ env.API_IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ env.API_IMAGE_NAME }}:buildcache
