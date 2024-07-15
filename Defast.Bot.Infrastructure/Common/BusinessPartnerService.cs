@@ -43,7 +43,7 @@ public class BusinessPartnerService(
         if (!await cacheBroker.TryGetAsync("SessionKey", out string? sessionId, cancellationToken))
             sessionId = await loginSap.LoginSapAsync(cancellationToken);
 
-         var url = requestUrls.Value.BaseUrl + requestUrls.Value.GetBpByPhoneNumber.Replace("{{mobilePhone}}", phone);
+        var url = requestUrls.Value.BaseUrl + requestUrls.Value.GetBpByPhoneNumber.Replace("{{mobilePhone}}", phone);
         
         return await businessPartnerRepository.GetBusinessPartnerAsync(url, sessionId!, cancellationToken);
     }

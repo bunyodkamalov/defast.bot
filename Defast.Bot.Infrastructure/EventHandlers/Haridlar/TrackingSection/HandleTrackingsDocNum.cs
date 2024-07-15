@@ -21,29 +21,29 @@ public class HandleTrackingsDocNum(ITrackingService trackingService)
                 : "Трекинг: \n\n");
 
             messageText.Append(eLanguage == ELanguage.Uzbek
-                ? $"Hujjat raqami: {tracking.DocNum}\n" +
-                  $"Mijoz ismi: {tracking.CardName} \n" +
-                  $"Konteyner №: {tracking.U_numberOfCntr}\n" +
-                  $"China platform: {tracking.U_China_platform}\n" +
-                  $"Platforma KZX №: {tracking.U_numberPlatformKzx}\n" +
-                  $"Temir yo'l stansiyasi: {tracking.U_StationOfOperationRailway}\n" +
+                ? $"Hujjat raqami: {tracking.DocNum ?? ""}\n" +
+                  $"Mijoz ismi: {tracking.CardName ?? ""} \n" +
+                  $"Konteyner №: {tracking.U_numberOfCntr ?? ""}\n" +
+                  $"China platform: {tracking.U_China_platform ?? ""}\n" +
+                  $"Platforma KZX №: {tracking.U_numberPlatformKzx ?? ""}\n" +
+                  $"Temir yo'l stansiyasi: {tracking.U_StationOfOperationRailway ?? ""}\n" +
                   $"Operatsiya sanasi: {DateTime.ParseExact(tracking.U_DateOfOperation!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n" +
-                  $"Operatsiya(liniya): {tracking.U_LineOfOperation}\n" +
-                  $"Stansiya manzili: {tracking.U_DestinationStation}\n" +
-                  $"Qolgan masofa(km): {tracking.U_Remaining_km}\n" +
+                  $"Operatsiya(liniya): {tracking.U_LineOfOperation ?? ""}\n" +
+                  $"Stansiya manzili: {tracking.U_DestinationStation ?? ""}\n" +
+                  $"Qolgan masofa(km): {tracking.U_Remaining_km ?? 0}\n" +
                   $"Taxminiy etkazib berish muddati: {DateTime.ParseExact(tracking.U_DispatchPlan!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n" +
                   $"Jo'nash sanasi: {DateTime.ParseExact(tracking.U_DateSending!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n"
 
-                : $"Номер документа: {tracking.DocNum}\n" +
-                  $"Имя клиента: {tracking.CardName} \n" +
-                  $"Контейнер №: {tracking.U_numberOfCntr}\n" +
-                  $"China platform: {tracking.U_China_platform}\n" +
-                  $"Platforma KZX №: {tracking.U_numberPlatformKzx}\n" +
-                  $"Станция операции ж.д: {tracking.U_StationOfOperationRailway}\n" +
+                : $"Номер документа: {tracking.DocNum ??  ""}\n" +
+                  $"Имя клиента: {tracking.CardName ?? ""} \n" +
+                  $"Контейнер №: {tracking.U_numberOfCntr ?? ""}\n" +
+                  $"China platform: {tracking.U_China_platform ?? ""}\n" +
+                  $"Platforma KZX №: {tracking.U_numberPlatformKzx ?? ""}\n" +
+                  $"Станция операции ж.д: {tracking.U_StationOfOperationRailway ?? ""}\n" +
                   $"Дата операции: {DateTime.ParseExact(tracking.U_DateOfOperation!,"yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n" +
-                  $"Операция(линия): {tracking.U_LineOfOperation}\n" +
-                  $"Станция назначения: {tracking.U_DestinationStation}\n" +
-                  $"Остаточное расстояние, км: {tracking.U_Remaining_km}\n" +
+                  $"Операция(линия): {tracking.U_LineOfOperation ?? ""}\n" +
+                  $"Станция назначения: {tracking.U_DestinationStation ?? ""}\n" +
+                  $"Остаточное расстояние, км: {tracking.U_Remaining_km ?? 0}\n" +
                   $"Расчетный срок доставки: {DateTime.ParseExact(tracking.U_DispatchPlan!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n" +
                   $"Дата отправки: {DateTime.ParseExact(tracking.U_DateSending!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n");
 
