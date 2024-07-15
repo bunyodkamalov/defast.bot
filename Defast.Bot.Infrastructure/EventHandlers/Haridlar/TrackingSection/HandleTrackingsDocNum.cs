@@ -32,7 +32,7 @@ public class HandleTrackingsDocNum(ITrackingService trackingService)
                   $"Stansiya manzili: {tracking.U_DestinationStation ?? ""}\n" +
                   $"Qolgan masofa(km): {tracking.U_Remaining_km ?? 0}\n" +
                   $"Taxminiy etkazib berish muddati: {(tracking.U_DispatchPlan is not null ? DateTime.ParseExact(tracking.U_DispatchPlan, "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy") : "")}\n" +
-                  $"Jo'nash sanasi: {DateTime.ParseExact(tracking.U_DateSending!, "yyyyMMdd", CultureInfo.InvariantCulture):dd.MM.yyyy}\n"
+                  $"Jo'nash sanasi: {(tracking.U_DateSending is not null ? DateTime.ParseExact(tracking.U_DateSending!, "yyyyMMdd", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy") : "")}\n"
 
                 : $"Номер документа: {tracking.DocNum ??  ""}\n" +
                   $"Имя клиента: {tracking.CardName ?? ""} \n" +
