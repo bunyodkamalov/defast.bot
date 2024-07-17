@@ -1,4 +1,5 @@
-﻿using Defast.Bot.Application.Common;
+﻿using System.Globalization;
+using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Domain.Settings;
@@ -37,10 +38,10 @@ public class HandleIgnoreSendMoney(
             eLanguage == ELanguage.Uzbek
                 ? "Pul ko'chirish rad etildi❌" +
                   $"Valyuta: {incomingPayment!.DocCurrency}\n" +
-                  $"Summa: {incomingPayment.CashSum}\n"
+                  $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n"
                 : "Перемешение денег отклонено❌" +
                   $"Валюта: {incomingPayment!.DocCurrency}\n" +
-                  $"Сумма: {incomingPayment.CashSum}\n",
+                  $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n",
             cancellationToken: cancellationToken);
         
 
@@ -49,12 +50,12 @@ public class HandleIgnoreSendMoney(
             eLanguage == ELanguage.Uzbek
                 ? "Pul ko'chirish rad etildi❌" +
                   $"Kassir: {businessPartner.CardName}\n" +
-                  $"Valyuta: {incomingPayment!.DocCurrency}\n" +
-                  $"Summa: {incomingPayment.CashSum}\n"
+                  $"Valyuta: {incomingPayment.DocCurrency}\n" +
+                  $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n"
                 : "Перемешение денег отклонено❌" +
                   $"Кассир: {businessPartner.CardName}\n" +
-                  $"Валюта: {incomingPayment!.DocCurrency}\n" +
-                  $"Сумма: {incomingPayment.CashSum}\n",
+                  $"Валюта: {incomingPayment.DocCurrency}\n" +
+                  $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n",
             cancellationToken: cancellationToken);
         
         await incomingPaymentsService.DeleteByIdAsync(incomingPaymentId, cancellationToken);

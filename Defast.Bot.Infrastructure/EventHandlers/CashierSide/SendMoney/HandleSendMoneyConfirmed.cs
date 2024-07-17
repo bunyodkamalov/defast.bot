@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
@@ -59,12 +60,12 @@ public class HandleSendMoneyConfirmed(IOptions<Chats> cashier, IIncomingPayments
                         ? new StringBuilder("Pul o'tkazildi:\n\n\"" +
                                             "Tasdiqlaysizmi?\n\n" +
                                             $"Valyuta: {incomingPayment.DocCurrency}\n" +
-                                            $"Summa: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n\n" +
+                                            $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n\n" +
                                             $"Izoh \ud83d\udcac: \n{comment}\n\n")
                         : new StringBuilder("Деньги переведены: \n\n" +
                                             "Подтвердите?\n\n" +
                                             $"Валюта: {incomingPayment.DocCurrency}\n" +
-                                            $"Сумма: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n\n" +
+                                            $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n\n" +
                                             $"Комментарий \ud83d\udcac: \n{comment}")).ToString(),
                     replyMarkup: inlineKeyBoardMarkup,
                     cancellationToken: cancellationToken);

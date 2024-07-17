@@ -1,4 +1,5 @@
-﻿using Defast.Bot.Application.Common;
+﻿using System.Globalization;
+using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Domain.Settings;
 using Microsoft.Extensions.Options;
@@ -37,11 +38,11 @@ public class HandleAcceptIncomingPayment(IIncomingPaymentsService incomingPaymen
                 language == ELanguage.Uzbek
                     ? "Pul ko'chirildi✅\n\n" +
                       $"Valyuta: {incomingPayment.DocCurrency}\n" +
-                      $"Summa: {incomingPayment.CashSum}\n" +
+                      $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n" +
                       $"Tasdiqladi: {callbackQuery.Message!.From!.FirstName}"
                     : "Платеж создан\n\n" +
                       $"Валюта: {incomingPayment.DocCurrency}\n" +
-                      $"Сумма: {incomingPayment.CashSum}\n" +
+                      $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n" +
                       $"Подтвердил(а): {callbackQuery.Message!.From!.FirstName}",
                 cancellationToken: cancellationToken);
 
@@ -53,10 +54,10 @@ public class HandleAcceptIncomingPayment(IIncomingPaymentsService incomingPaymen
                 language == ELanguage.Uzbek
                     ? "Pul o'tkazish tasdiqlandi✅\n\n" +
                       $"Valyuta: {incomingPayment.DocCurrency}\n" +
-                      $"Summa: {incomingPayment.CashSum}\n"
+                      $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n"
                     : "Платеж создан\n\n" +
                       $"Валюта: {incomingPayment.DocCurrency}\n" +
-                      $"Сумма: {incomingPayment.CashSum}\n",
+                      $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n",
                 cancellationToken: cancellationToken);
         }
         else

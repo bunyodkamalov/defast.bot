@@ -1,4 +1,5 @@
-﻿using Defast.Bot.Application.Common;
+﻿using System.Globalization;
+using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Domain.Settings;
@@ -52,33 +53,33 @@ public class HandleCashierConfirmed(
         await telegramBotClient.SendTextMessageAsync(chats.Value.CashierChatId,
             language == ELanguage.Uzbek
                 ? "Kirim to'lov yaratildi.✅\n" +
-                  $"Summa: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
+                  $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
                   $"Mijoz: {businessPartner!.CardName}\n"
                
                 : "Входящиий платеж создан.✅\n" +
-                  $"Сумма: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
+                  $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
                   $"Клиент: {businessPartner!.CardName}",
             cancellationToken: cancellationToken);
 
         await telegramBotClient.SendTextMessageAsync(chats.Value.GroupChatId,
             language == ELanguage.Uzbek
                 ? "Kirim to'lov yaratildi.✅\n" +
-                  $"Summa: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
-                  $"Mijoz: {businessPartner!.CardName}\n"
+                  $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
+                  $"Mijoz: {businessPartner.CardName}\n"
                 
                 : "Входящиий платеж создан.✅" +
-                  $"Сумма: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
-                  $"Клиент: {businessPartner!.CardName}",
+                  $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
+                  $"Клиент: {businessPartner.CardName}",
             cancellationToken: cancellationToken);
 
         await telegramBotClient.SendTextMessageAsync(
             businessPartner.U_TG_ID!,
             language == ELanguage.Uzbek
                 ? "Kirim to'lov tasdiqlandi.✅\n" +
-                  $"Summa: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}" 
+                  $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}" 
                   
                 : "Входящиий платеж подтвержден.✅" +
-                  $"Сумма: {incomingPayment.CashSum} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}",
+                  $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}",
             cancellationToken: cancellationToken);
 
         await telegramBotClient.DeleteMessageAsync(callbackQuery.Message!.Chat.Id, callbackQuery.Message.MessageId,
