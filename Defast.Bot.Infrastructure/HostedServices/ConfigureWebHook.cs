@@ -245,7 +245,7 @@ public class ConfigureWebHook : IHostedService
                                 break;
 
                             case "UZS":
-                                _businessPartnerPayment[ECurrency.USD] = decimal.Parse(messageText);
+                                _businessPartnerPayment[ECurrency.UZS] = decimal.Parse(messageText);
                                 await HandlePaymentComment.Handle(client, update.Message!, ELanguage[_chatId], cancellationToken);
                                 _callbackQueries[_chatId].Data = "UZScomment";
                                 break;
@@ -266,19 +266,19 @@ public class ConfigureWebHook : IHostedService
                                 _incomingPaymentAmounts[ECurrency.UZS] = decimal.Parse(messageText);
                                 await HandleConfirmIncomingPayment.HandleAsync(_businessPartner, _incomingPaymentAmounts, client, update.Message,
                                     ELanguage[_chatId], cancellationToken);
-                                break;
+                                return;
 
                             case "USDincomingPayment":
                                 _incomingPaymentAmounts[ECurrency.USD] = decimal.Parse(messageText);
                                 await HandleConfirmIncomingPayment.HandleAsync(_businessPartner, _incomingPaymentAmounts, client, update.Message,
                                     ELanguage[_chatId], cancellationToken);
-                                break;
+                                return;
 
                             case "UZS&USDincomingPayment":
                                 _incomingPaymentAmounts[ECurrency.UZS] = decimal.Parse(messageText);
                                 await HandleUsd.Handle(client, _callbackQueries[_chatId], ELanguage[_chatId], cancellationToken);
                                 _callbackQueries[_chatId].Data = "USDincomingPayment";
-                                break;
+                                return;
 
                             case { } cdata when cdata.StartsWith("editInPaymentAmount_"):
                                 var callData = _callbackQueries[_chatId].Data!.Replace("editInPaymentAmount_", "");
