@@ -13,6 +13,7 @@ using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.Bi
 using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.BirKunlik;
 using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.BirOylik;
 using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.HammaVaqtDavomida;
+using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.AktSverka;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lov;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati.BirHaftalik;
@@ -97,6 +98,12 @@ public static partial class HostConfigurations
         builder.Services.AddScoped<HandleTracking>();
         builder.Services.AddScoped<HandleTrackingPagination>();
         builder.Services.AddScoped<HandleTrackingsDocNum>();
+        
+        //AktSverka
+        builder.Services.AddScoped<HandleAktSverkaOneDayPeriod>();
+        builder.Services.AddScoped<HandleAktSverkaOneWeekPeriod>();
+        builder.Services.AddScoped<HandleAktSverkaOneMonthPeriod>();
+        builder.Services.AddScoped<HandleAktSverkaAllTheDayPeriod>();
         
         return builder;
     }

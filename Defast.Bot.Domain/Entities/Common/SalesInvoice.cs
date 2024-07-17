@@ -34,5 +34,7 @@ public class SalesInvoice : Entity
     
     public int SalesPersonCode { get; set; }
     
+    public string? U_numberOfCntr { get; set; }
+    
     public List<InvoiceDocLines> DocumentLines { get; set; } = default!;
 }

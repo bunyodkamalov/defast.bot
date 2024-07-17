@@ -36,12 +36,14 @@ public class HandleOutgoingPaymentDocNum(
                 ? $"\tHujjat raqami: {outgoingPayment.DocNum}\n" +
                   $"\t🗓️Sana: {DateTimeOffset.Parse(outgoingPayment.DocDate!):dd.MM.yyyy} \n" +
                   $"\tValyuta: {outgoingPayment.DocCurrency}\n" +
-                  $"\tSumma : {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() ? outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ') : ((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' '))}\n"
+                  $"\tSumma : {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() ? outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ') : ((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' '))}\n\n" +
+                  $"Izoh: {outgoingPayment.Remarks}\n"
 
                 : $"\tНомер документа: {outgoingPayment.DocNum}\n" +
                   $"\t🗓Дата: {DateTimeOffset.Parse(outgoingPayment.DocDate!):dd.MM.yyyy} \n" +
                   $"\tВалюта: {outgoingPayment.DocCurrency}\n" +
-                  $"\tSumma : {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() ? outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ') : ((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' '))}\n");
+                  $"\tSumma : {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() ? outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ') : ((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' '))}\n\n" +
+                  $"Izoh: {outgoingPayment.Remarks}");
 
 
             await tgBotClient.DeleteMessageAsync(message.Chat.Id, message.MessageId, cancellationToken);

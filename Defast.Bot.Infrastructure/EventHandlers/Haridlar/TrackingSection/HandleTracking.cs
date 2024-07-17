@@ -33,7 +33,7 @@ public class HandleTracking(ICacheBroker cacheBroker, ITrackingService trackingS
             List<InlineKeyboardButton[]> inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
             foreach (var tracking in trackings.Skip((pageToken - 1) * 10).Take(10))
                 inlineKeyboardButtons.Add([
-                    InlineKeyboardButton.WithCallbackData($"Hujjat raqami №{tracking!.DocNum}", $"trackingDocNum_{tracking.DocNum}")
+                    InlineKeyboardButton.WithCallbackData($"Hujjat raqami №{tracking!.DocNum} | {tracking.U_numberOfCntr}", $"trackingDocNum_{tracking.DocNum}")
                 ]);
 
             InlineKeyboardButton[] inlineKeyBoardArray = new InlineKeyboardButton[trackings!.Count / 10 + 1];

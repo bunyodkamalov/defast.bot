@@ -33,7 +33,8 @@ public class HandleCompletedOrdersDocNum(IBusinessPartnerService businessPartner
                 : "Выполненные заказы ✅: \n\n");
 
             messageText.Append(eLanguage == ELanguage.Uzbek 
-                ? $"Hujjat raqami № {invoice.DocNum}\n" + 
+                ? $"Hujjat raqami № {invoice.DocNum}\n" +
+                  $"Konteyner raqami: {invoice.U_numberOfCntr} \n" + 
                   $"🗓️Sana: {DateTimeOffset.Parse(invoice.DocDueDate!):dd.MM.yyyy} \n\n" 
                 : $"Номер документа № {invoice.DocNum}\n\n" +
                   $"🗓Дата: {DateTimeOffset.Parse(invoice.DocDueDate!):dd.MM.yyyy} \n\n");
@@ -44,21 +45,16 @@ public class HandleCompletedOrdersDocNum(IBusinessPartnerService businessPartner
                 overAllQuantity += (decimal)item.InventoryQuantity!;
                 
                 messageText.Append(eLanguage == ELanguage.Uzbek
-                    ? $"\ud83d\udce6 Tovar:  {item.ItemDescription}\n" +
-                      $"\ud83d\udcca Miqdori:  {item.InventoryQuantity} kg\n\n"
-
-                    : $"\t\ud83d\udce6 Товар: {item.ItemDescription}\n" +
-                      $"\t\ud83d\udcca Количество: {item.InventoryQuantity} кг\n");
+                    ? $"\ud83d\udce6 Tovar:  {item.ItemDescription}\n"
+                    : $"\t\ud83d\udce6 Товар: {item.ItemDescription}\n" );
             }
 
             messageText.Append(
                 eLanguage == ELanguage.Uzbek 
                     ? $"\ud83d\udcac Izoh :  {invoice.Comments}\n\n" +
-                      $"\ud83d\udcca Jami miqdor:  {overAllQuantity} kg\n" +
                       $"💲Jami Summa: {invoice.DocTotal} $"
                       
                     : $"\ud83d\udcac Комментарий:  {invoice.Comments}\n\n" +
-                      $"\ud83d\udcca Общая количество:  {overAllQuantity} kg\n" +
                       $"💲Общая сумма: {invoice.DocTotal} $");
             
             await tgBotClient.DeleteMessageAsync(callbackQuery.Message!.Chat.Id, callbackQuery.Message.MessageId, cancellationToken);

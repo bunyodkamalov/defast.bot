@@ -29,7 +29,7 @@ public class BusinessPartnerService(
 
     public async ValueTask<BusinessPartner?> GetByCardCodeAsync(string cardCode, string startDate, string endDate, CancellationToken cancellationToken)
     {
-        var url = hanaSqlUrls.Value.BaseUrl + hanaSqlUrls.Value.GetBusinessPartner
+        var url = hanaSqlUrls.Value.BaseUrl + hanaSqlUrls.Value.GetAktSverka
             .Replace("{{cardCode}}", cardCode)
             .Replace("{{startDate}}", startDate)
             .Replace("{{endDate}}", endDate);

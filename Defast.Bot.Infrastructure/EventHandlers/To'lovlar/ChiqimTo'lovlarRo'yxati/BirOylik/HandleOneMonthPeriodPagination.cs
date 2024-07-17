@@ -1,4 +1,5 @@
-﻿using Defast.Bot.Application.Common;
+﻿using System.Globalization;
+using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Persistence.Caching.Brokers;
@@ -33,13 +34,17 @@ public class HandleOneMonthPeriodPagination(IIncomingPaymentsService incomingPay
         else
         {
             var messageText = eLanguage == ELanguage.Uzbek
-                ? "Chiqim to'lovlar \ud83d\udd04: \n\n"
-                : "Исходящие платежи \ud83d\udd04: \n\n";
+                ? "Bir oylik chiqim to'lovlar \ud83d\udd04: \n\n"
+                : "Ежемесячные платежи \ud83d\udd04: \n\n";
             
             List<InlineKeyboardButton[]> inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
             foreach (var outgoingPayment in outgoingPayments!.Skip((pageToken - 1) * 10).Take(10))
                 inlineKeyboardButtons.Add([
-                    InlineKeyboardButton.WithCallbackData($"Hujjat raqami №{outgoingPayment.DocNum}", $"outgoingPaymentdocNum_{outgoingPayment.DocNum}")
+                    InlineKeyboardButton.WithCallbackData(
+                        $"Hujjat raqami №{outgoingPayment!.DocNum} | {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() 
+                            ? $"{outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} $" 
+                            : $"{((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} so'm")}",
+                        $"outgoingPaymentdocNum_{outgoingPayment.DocNum}")
                 ]);
 
             InlineKeyboardButton[] inlineKeyBoardArray = new InlineKeyboardButton[outgoingPayments!.Count / 10 + 1];

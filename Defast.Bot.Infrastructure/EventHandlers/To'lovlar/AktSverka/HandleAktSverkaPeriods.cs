@@ -5,7 +5,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Defast.Bot.Infrastructure.EventHandlers.To_lovlar.AktSverka;
 
-public static class HandlePeriods
+public static class HandleAktSverkaPeriods
 {
     public static async ValueTask HandleAsync(ITelegramBotClient telegramBotClient, CallbackQuery callbackQuery, ELanguage language, CancellationToken cancellationToken)
     {

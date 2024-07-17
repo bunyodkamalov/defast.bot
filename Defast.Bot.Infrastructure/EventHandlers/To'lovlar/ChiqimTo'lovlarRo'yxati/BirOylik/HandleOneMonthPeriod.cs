@@ -1,4 +1,5 @@
-﻿using Defast.Bot.Application.Common;
+﻿using System.Globalization;
+using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Persistence.Caching.Brokers;
 using Telegram.Bot;
@@ -19,9 +20,9 @@ public class HandleOneMonthPeriod(ICacheBroker cacheBroker,
         
         
         var businessPartner = await businessPartnerService.GetByTgIdAsync(callbackQuery.Message!.Chat.Id, cancellationToken);
-        var outgoingPayments = await incomingPaymentsService.GetByCardCodeAsync(businessPartner.CardName, cancellationToken);
+        var outgoingPayments = await incomingPaymentsService.GetByCardCodeAsync(businessPartner.CardCode, cancellationToken);
        
-        if (!outgoingPayments!.Any())
+        if (!outgoingPayments.Any())
             return await telegramBotClient.SendTextMessageAsync(
                 callbackQuery.Message!.Chat.Id,
                 eLanguage == ELanguage.Uzbek
@@ -30,7 +31,7 @@ public class HandleOneMonthPeriod(ICacheBroker cacheBroker,
                 cancellationToken: cancellationToken);
         else
         {
-            foreach (var outgoingPayment in outgoingPayments!.ToList())
+            foreach (var outgoingPayment in outgoingPayments.ToList())
                 if (!(DateTime.Parse(outgoingPayment.DocDate!) > DateTime.Now.AddMonths(-1)))
                     outgoingPayments?.Remove(outgoingPayment);
             
@@ -38,7 +39,7 @@ public class HandleOneMonthPeriod(ICacheBroker cacheBroker,
                 return await telegramBotClient.SendTextMessageAsync(
                     callbackQuery.Message!.Chat.Id,
                     eLanguage == ELanguage.Uzbek
-                        ? "Bir kunlik chiqim to'lovlar topilmadi ❌"
+                        ? "Bir oylik chiqim to'lovlar topilmadi ❌"
                         : "Исходящие платежи не найдены❌",
                     cancellationToken: cancellationToken);
            
@@ -46,13 +47,17 @@ public class HandleOneMonthPeriod(ICacheBroker cacheBroker,
                 cancellationToken: cancellationToken);
             
             var messageText = eLanguage == ELanguage.Uzbek
-                ? "Chiqim to'lovlar \ud83d\udd04: \n\n"
-                : "Исходящие платежи \ud83d\udd04: \n\n";
+                ? "Bir oylik chiqim to'lovlar \ud83d\udd04: \n\n"
+                : "Ежемесячные платежи \ud83d\udd04: \n\n";
             
             List<InlineKeyboardButton[]> inlineKeyboardButtons = new List<InlineKeyboardButton[]>();
             foreach (var outgoingPayment in outgoingPayments!.Skip((pageToken - 1) * 10).Take(10))
                 inlineKeyboardButtons.Add([
-                    InlineKeyboardButton.WithCallbackData($"Hujjat raqami №{outgoingPayment.DocNum}", $"outgoingPaymentdocNum_{outgoingPayment.DocNum}")
+                    InlineKeyboardButton.WithCallbackData(
+                        $"Hujjat raqami №{outgoingPayment!.DocNum} | {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() 
+                            ? $"{outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} $" 
+                            : $"{((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} so'm")}",
+                        $"outgoingPaymentdocNum_{outgoingPayment.DocNum}")
                 ]);
 
             InlineKeyboardButton[] inlineKeyBoardArray = new InlineKeyboardButton[outgoingPayments!.Count / 10 + 1];

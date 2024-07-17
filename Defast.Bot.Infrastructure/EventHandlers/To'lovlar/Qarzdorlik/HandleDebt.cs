@@ -18,10 +18,10 @@ public class HandleDebt(IBusinessPartnerService businessPartnerService)
             var messageText = eLanguage == ELanguage.Uzbek
                 ? "ℹ️ Ma'lumot\n\n" +
                   $"Ism: {businessPartner!.CardName}\n" +
-                  $"Balans: {decimal.Parse(businessPartner.CurrentAccountBalance!).ToString("#,##.##", CultureInfo.InvariantCulture).Replace(',', ' ')}\n"
+                  $"Balans: {decimal.Parse(businessPartner.CurrentAccountBalance!).ToString("#,##.##", CultureInfo.InvariantCulture).Replace(',', ' ')} $\n "
                 : "ℹ️ Данные" +
                   $"Имя: {businessPartner!.CardName}" +
-                  $"Баланс: {decimal.Parse(businessPartner.CurrentAccountBalance!).ToString("#,##.##", CultureInfo.InvariantCulture).Replace(',', ' ')}";
+                  $"Баланс: {decimal.Parse(businessPartner.CurrentAccountBalance!).ToString("#,##.##", CultureInfo.InvariantCulture).Replace(',', ' ')} $\n";
 
             await telegramBotClient.SendTextMessageAsync(
                 callbackQuery.Message!.Chat.Id,

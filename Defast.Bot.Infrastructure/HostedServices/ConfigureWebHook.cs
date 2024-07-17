@@ -11,6 +11,7 @@ using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.Bi
 using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.BirOylik;
 using Defast.Bot.Infrastructure.EventHandlers.Haridlar.TugallanganBuyurtmalar.HammaVaqtDavomida;
 using Defast.Bot.Infrastructure.EventHandlers.ReplyKeyboardMarkups;
+using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.AktSverka;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lov;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati;
 using Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati.BirHaftalik;
@@ -25,6 +26,9 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using HandleOneDayPeriod = Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati.BirKunlik.HandleOneDayPeriod;
+using HandleOneMonthPeriod = Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati.BirOylik.HandleOneMonthPeriod;
+using HandleOneWeekPeriod = Defast.Bot.Infrastructure.EventHandlers.To_lovlar.ChiqimTo_lovlarRo_yxati.BirHaftalik.HandleOneWeekPeriod;
 
 namespace Defast.Bot.Infrastructure.HostedServices;
 
@@ -49,8 +53,8 @@ public class ConfigureWebHook : IHostedService
     private Message trackingMessage;
     
     private string SendMoneyComment { get; set; }
-    
-    private Dictionary<long, string> PaymentComment { get; set; }
+
+    private Dictionary<long, string> PaymentComment { get; set; } = new();
 
 
     private Message _outgoingPaymentsMessage;
@@ -155,7 +159,7 @@ public class ConfigureWebHook : IHostedService
                         case "USDcomment":
                             if (!PaymentComment.TryAdd(_chatId, messageText!))
                                 PaymentComment[_chatId] = messageText!;
-
+                            
                             await HandleConfirming.HandleAsync(_businessPartnerPayment, PaymentComment[_chatId], client, update.Message,
                                 ELanguage[_chatId],
                                 cancellationToken);
@@ -689,6 +693,29 @@ public class ConfigureWebHook : IHostedService
                         await handleTrackingDocNum.Handle(trackingDocNum, client, trackingMessage, ELanguage[_chatId], cancellationToken);
                         break;
                     
+                    case "aktSverka":
+                        await HandleAktSverkaPeriods.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        break;
+                    
+                    case "aktSverkaOneDayPeriod":
+                        var aktSverkaOneDayPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneDayPeriod>();
+                        await aktSverkaOneDayPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        break;
+                    
+                    case "aktSverkaOneWeekPeriod":
+                        var aktSverkaOneWeekPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneWeekPeriod>();
+                        await aktSverkaOneWeekPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        break;
+                    
+                    case "aktSverkaOneMonthPeriod":
+                        var aktSverkaOneMonthPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneMonthPeriod>();
+                        await aktSverkaOneMonthPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        break;
+                    
+                    case "aktSverkaAllTimePeriod":
+                        var aktSverkaAllTimePeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaAllTheDayPeriod>();
+                        await aktSverkaAllTimePeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        break;
                 }
             }
 
