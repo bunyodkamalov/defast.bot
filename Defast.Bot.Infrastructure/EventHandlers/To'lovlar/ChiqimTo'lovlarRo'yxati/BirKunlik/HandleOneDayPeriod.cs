@@ -54,7 +54,7 @@ public class HandleOneDayPeriod(ICacheBroker cacheBroker,
             foreach (var outgoingPayment in outgoingPayments!.Skip((pageToken - 1) * 10).Take(10))
                 inlineKeyboardButtons.Add([
                     InlineKeyboardButton.WithCallbackData(
-                        $"Hujjat raqami №{outgoingPayment!.DocNum} | {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() 
+                        $"{DateTimeOffset.Parse(outgoingPayment.DocDate!):dd.MM.yyyy} | {(outgoingPayment.DocCurrency == ECurrency.USD.ToString() 
                             ? $"{outgoingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} $" 
                             : $"{((decimal)outgoingPayment.CashSumFC!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} so'm")}",
                         $"outgoingPaymentdocNum_{outgoingPayment.DocNum}")

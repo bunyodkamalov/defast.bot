@@ -62,7 +62,7 @@ namespace Defast.Bot.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IncomingPayments");
+                    b.ToTable("IncomingPayments", (string)null);
                 });
 
             modelBuilder.Entity("Defast.Bot.Domain.Entities.Common.IncomingPaymentAccount", b =>
@@ -79,7 +79,7 @@ namespace Defast.Bot.Persistence.Migrations
 
                     b.HasKey("IncomingPaymentId");
 
-                    b.ToTable("IncomingPaymentAccounts");
+                    b.ToTable("IncomingPaymentAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Defast.Bot.Domain.Entities.Common.PaymentInvoice", b =>
@@ -101,7 +101,7 @@ namespace Defast.Bot.Persistence.Migrations
 
                     b.HasKey("IncomingPaymentId");
 
-                    b.ToTable("PaymentInvoice");
+                    b.ToTable("PaymentInvoice", (string)null);
                 });
 
             modelBuilder.Entity("Defast.Bot.Domain.Entities.Common.IncomingPaymentAccount", b =>

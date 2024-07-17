@@ -21,7 +21,6 @@ public class IncomingPayment : Entity
     public string? Remarks { get; set; } = default!;
 
     public string CardCode { get; set; } = default!;
-
     public string? CardName { get; set; } 
 
     public List<IncomingPaymentAccount>? PaymentAccounts { get; set; } = new();
