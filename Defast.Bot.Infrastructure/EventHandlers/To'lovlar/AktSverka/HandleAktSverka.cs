@@ -9,7 +9,7 @@ using Telegram.Bot.Types;
 
 namespace Defast.Bot.Infrastructure.EventHandlers.To_lovlar.AktSverka;
 
-public class HandleAktSverkaAllTheDayPeriod(IBusinessPartnerService businessPartnerService, IMapper mapper)
+public class HandleAktSverka(IBusinessPartnerService businessPartnerService, IMapper mapper)
 {
     public async ValueTask HandleAsync(ITelegramBotClient telegramBotClient, CallbackQuery callbackQuery, ELanguage language, CancellationToken cancellationToken)
     {
@@ -26,13 +26,9 @@ public class HandleAktSverkaAllTheDayPeriod(IBusinessPartnerService businessPart
             await telegramBotClient.SendTextMessageAsync(callbackQuery.Message!.Chat.Id, 
                 $"Ism: {businessPartner.CardName}\n" +
                 $"Telefon Raqam: {businessPartner.MobilePhone}\n\n" +
-                $"Davr boshidagi qoldiq:   {data.BalanceFirstDayOfTheMonth.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $\n" +
-                $"Sotib olingan mol:   {data.PurchasedProduct.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n" +
+                $"Eltish xizmat narxi:   {data.PurchasedProduct.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n" +
                 $"To'langan pul:   {data.PaidMoney.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n" +
-                $"Jami to'lanishi kerak:   {data.BalanceLastDayOfTheMonth.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n" +
-                $"Jami qarzdorlik:   {data.CurrentAccountBalance.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n" +
-                $"Pul aylanishi: {data.MoneySpeed}\n\n" +
-                $"Davr: Hamma vaqt",
+                $"To'lanishi kerak:   {data.CurrentAccountBalance.ToString("00.00", CultureInfo.InvariantCulture).Replace(',', ' ')} $ \n",
                 replyMarkup: UserMainMenuMarkup.Get(language),
                 cancellationToken: cancellationToken);
         }

@@ -100,10 +100,7 @@ public static partial class HostConfigurations
         builder.Services.AddScoped<HandleTrackingsDocNum>();
         
         //AktSverka
-        builder.Services.AddScoped<HandleAktSverkaOneDayPeriod>();
-        builder.Services.AddScoped<HandleAktSverkaOneWeekPeriod>();
-        builder.Services.AddScoped<HandleAktSverkaOneMonthPeriod>();
-        builder.Services.AddScoped<HandleAktSverkaAllTheDayPeriod>();
+        builder.Services.AddScoped<HandleAktSverka>();
         
         return builder;
     }

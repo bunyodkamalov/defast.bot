@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
@@ -52,10 +53,10 @@ public class HandleCompletedOrdersDocNum(IBusinessPartnerService businessPartner
             messageText.Append(
                 eLanguage == ELanguage.Uzbek 
                     ? $"\ud83d\udcac Izoh :  {invoice.Comments}\n\n" +
-                      $"💲Jami Summa: {invoice.DocTotal} $"
+                      $"💲Jami Summa: {((decimal)invoice.DocTotal!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} $"
                       
                     : $"\ud83d\udcac Комментарий:  {invoice.Comments}\n\n" +
-                      $"💲Общая сумма: {invoice.DocTotal} $");
+                      $"💲Общая сумма: {((decimal)invoice.DocTotal!).ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} $");
             
             await tgBotClient.DeleteMessageAsync(callbackQuery.Message!.Chat.Id, callbackQuery.Message.MessageId, cancellationToken);
 

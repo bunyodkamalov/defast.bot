@@ -14,19 +14,10 @@ public class BusinessPartner : Entity
     
     public long? U_TG_ID { get; set; }
     
-    public string? BalanceFirstDayOfPeriod { get; set; } 
-    
     public string? PurchasedProduct { get; set; } 
     
     public string? PaidMoney { get; set; } 
     
-    public string? TotalAmountReceived { get; set; } 
-    
-    public string? BalanceLastDayOfPeriod { get; set; } 
-    
     public string? CurrentAccountBalance { get; set; } 
     
-    public string? SalesPerson { get; set; } 
-    
-    public string? MoneySpeed { get; set; }
 }

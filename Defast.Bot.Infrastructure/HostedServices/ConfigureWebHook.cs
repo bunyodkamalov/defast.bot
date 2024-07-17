@@ -694,27 +694,8 @@ public class ConfigureWebHook : IHostedService
                         break;
                     
                     case "aktSverka":
-                        await HandleAktSverkaPeriods.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
-                        break;
-                    
-                    case "aktSverkaOneDayPeriod":
-                        var aktSverkaOneDayPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneDayPeriod>();
-                        await aktSverkaOneDayPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
-                        break;
-                    
-                    case "aktSverkaOneWeekPeriod":
-                        var aktSverkaOneWeekPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneWeekPeriod>();
-                        await aktSverkaOneWeekPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
-                        break;
-                    
-                    case "aktSverkaOneMonthPeriod":
-                        var aktSverkaOneMonthPeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaOneMonthPeriod>();
-                        await aktSverkaOneMonthPeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
-                        break;
-                    
-                    case "aktSverkaAllTimePeriod":
-                        var aktSverkaAllTimePeriod = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverkaAllTheDayPeriod>();
-                        await aktSverkaAllTimePeriod.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
+                        var aktSverka = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleAktSverka>();
+                        await aktSverka.HandleAsync(client, update.CallbackQuery, ELanguage[_chatId], cancellationToken);
                         break;
                 }
             }
