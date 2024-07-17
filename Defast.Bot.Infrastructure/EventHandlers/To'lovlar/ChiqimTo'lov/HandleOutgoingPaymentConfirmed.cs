@@ -41,7 +41,8 @@ public class HandleOutgoingPaymentConfirmed(
                 Remarks = comment,
                 CardName = businessPartner.CardName,
                 DocCurrency = amount.Key.ToString(),
-                CashSum = amount.Value
+                CashSum = amount.Value,
+                U_cashFlow = "4"
             };
 
             await incomingPaymentsService.InsertAsync(incomingPayment, cancellationToken);

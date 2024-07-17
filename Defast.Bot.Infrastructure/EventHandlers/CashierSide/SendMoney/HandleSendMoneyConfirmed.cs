@@ -26,6 +26,7 @@ public class HandleSendMoneyConfirmed(IOptions<Chats> cashier, IIncomingPayments
                 CashSum = amount.Value,
                 Remarks = comment,
                 DocCurrency = amount.Key.ToString(),
+                U_cashFlow = "4",
                 PaymentAccounts = new List<IncomingPaymentAccount>
                 {
                     new IncomingPaymentAccount
