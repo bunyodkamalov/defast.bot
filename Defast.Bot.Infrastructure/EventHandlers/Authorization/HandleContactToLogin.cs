@@ -22,7 +22,7 @@ public class HandleContactToLogin(IBusinessPartnerService businessPartnerService
             if (businessPartner.U_TG_ID is null)
                 await businessPartnerService.UpdateAsync(businessPartner.CardCode, message.Chat.Id, cancellationToken);
 
-            if (businessPartner.CardCode.Contains("cashier", StringComparison.OrdinalIgnoreCase))
+            if (businessPartner.CardCode.StartsWith("cashier", StringComparison.OrdinalIgnoreCase))
                 await tgClient.SendTextMessageAsync(message.Chat.Id,
                     eLanguage == ELanguage.Uzbek ? "Foydalanuvchi tasdiqlandi ✅" : "Пользователь подтвержден ✅",
                     replyMarkup: CashierMainMenuMarkup.Get(eLanguage),

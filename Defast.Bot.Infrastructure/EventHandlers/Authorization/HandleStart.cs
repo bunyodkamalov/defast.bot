@@ -15,7 +15,7 @@ public class HandleStart(IBusinessPartnerService businessPartnerService)
     {
         var businessPartner = await businessPartnerService.GetByTgIdAsync(message.Chat.Id, cancellationToken);
         
-        if (businessPartner!.CardCode.Contains("cashier", StringComparison.OrdinalIgnoreCase))
+        if (businessPartner!.CardCode.StartsWith("cashier", StringComparison.OrdinalIgnoreCase))
             await tgClient.SendTextMessageAsync(message.Chat.Id,
                 eLanguage == ELanguage.Uzbek ? "Foydalanuvchi tasdiqlandi ✅" : "Пользователь подтвержден ✅",
                 replyMarkup: CashierMainMenuMarkup.Get(eLanguage),
