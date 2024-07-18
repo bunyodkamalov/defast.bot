@@ -72,7 +72,8 @@ public static partial class HostConfigurations
         builder.Services.AddScoped<HandleOutgoingPaymentsPagination>();
         builder.Services.AddScoped<HandleOutgoingPaymentDocNum>();
         builder.Services.AddScoped<HandleDebt>();
-        
+
+        builder.Services.AddScoped<HandleStart>();
         
         builder.Services.AddScoped<HandleCompletedOrdersAllPeriod>();
         builder.Services.AddScoped<HandleCompletedOrdersAllPeriodPagination>();
@@ -126,7 +127,7 @@ public static partial class HostConfigurations
         builder.Services.AddScoped<IIncomingPaymentRepository, IncomingPaymentRepository>();
         builder.Services.AddScoped<IInvoicesRepository, InvoicesRepository>();
         builder.Services.AddScoped<ITrackingRepository, TrackingRepository>();
-
+        
         
         return builder;
     }

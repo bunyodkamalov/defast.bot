@@ -118,12 +118,8 @@ public class ConfigureWebHook : IHostedService
                 {
                     case "/start" when _isRegistered.TryGetValue(_chatId, out bool isRegistered) && isRegistered:
                         _chatId = update.Message.Chat.Id;
-                        await client.SendTextMessageAsync(update.Message.Chat.Id,
-                            ELanguage[_chatId] == Domain.Enums.ELanguage.Uzbek
-                                ? "Quyidagilardan birini tanlang"
-                                : "Выберите один из следующих",
-                            replyMarkup: UserMainMenuMarkup.Get(ELanguage[_chatId]),
-                            cancellationToken: cancellationToken);
+                        var handleStart = _serviceScopeFactory.ServiceProvider.GetRequiredService<HandleStart>();
+                        await handleStart.HandleAsync(client, update.Message, ELanguage[_chatId], cancellationToken);
                         break;
 
                     case "/start":

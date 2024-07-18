@@ -3,6 +3,7 @@ using Defast.Bot.Application.Common;
 using Defast.Bot.Domain.Entities.Common;
 using Defast.Bot.Domain.Enums;
 using Defast.Bot.Domain.Settings;
+using Defast.Bot.Infrastructure.EventHandlers.CashierSide;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -55,10 +56,11 @@ public class HandleCashierConfirmed(
                 ? "Kirim to'lov yaratildi.✅\n" +
                   $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
                   $"Mijoz: {businessPartner!.CardName}\n"
-               
+
                 : "Входящиий платеж создан.✅\n" +
                   $"Сумма: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
                   $"Клиент: {businessPartner!.CardName}",
+            replyMarkup: CashierMainMenuMarkup.Get(language),
             cancellationToken: cancellationToken);
 
         await telegramBotClient.SendTextMessageAsync(chats.Value.GroupChatId,
