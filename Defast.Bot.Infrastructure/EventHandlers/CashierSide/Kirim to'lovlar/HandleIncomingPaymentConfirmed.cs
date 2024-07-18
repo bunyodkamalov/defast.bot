@@ -47,7 +47,7 @@ public class HandleIncomingPaymentConfirmed(
                 await telegramBotClient.SendTextMessageAsync(chats.Value.CashierChatId,
                     language == ELanguage.Uzbek
                         ? "Kirim to'lov yaratildi.✅\n" +
-                          $"Summa: {createdIncomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
+                          $"Summa: {incomingPayment.CashSum.ToString("#,##", CultureInfo.InvariantCulture).Replace(',', ' ')} {(incomingPayment.DocCurrency == ECurrency.USD.ToString() ? "$" : "so'm")}\n" +
                           $"Mijoz: {createdIncomingPayment.CardName}\n"
 
                         : "Входящиий платеж создан.✅\n" +
